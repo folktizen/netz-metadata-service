@@ -4,9 +4,6 @@
   "main": "src/index.ts",
   "author": "Makoto Inoue <2630+makoto@users.noreply.github.com>",
   "license": "MIT",
-  "engines": {
-    "node": ">=16.15"
-  },
   "dependencies": {
     "@adraffy/ens-normalize": "^1.10.0",
     "@ensdomains/ens-avatar": "^1.0.0-alpha.3.ethers.6",
