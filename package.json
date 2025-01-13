@@ -72,8 +72,5 @@
     "require": [
       "ts-node/register/transpile-only"
     ]
-  },
-  "volta": {
-    "node": "18.15.0"
   }
 }
