@@ -76,7 +76,7 @@ function shouldCompress(req: Request, res: Response) {
   return compression.filter(req, res);
 }
 
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`APP_LOG::App listening on port ${PORT}`);
 });

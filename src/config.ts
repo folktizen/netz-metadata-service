@@ -1,12 +1,12 @@
 const path = require('path');
 require('dotenv').config();
 
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 3000;
 const HOST = process.env.HOST || 'localhost';
 const ENV = process.env.ENV || 'local'; // local/prod
 const REDIS_URL = process.env.REDIS_URL;
 
-const FONT_FOLDER = path.join((ENV === 'local' ? 'src' : 'dist'), 'assets');
+const FONT_FOLDER = path.join((ENV === 'local' ? 'src' : 'public'), 'assets');
 const CANVAS_FONT_PATH = path.join(FONT_FOLDER, 'Satoshi-Bold.ttf');
 const CANVAS_EMOJI_FONT_PATH = path.join(FONT_FOLDER, 'NotoColorEmoji.ttf');
 const INAMEWRAPPER = process.env.INAMEWRAPPER || '0xd82c42d8';
