@@ -5,3 +5,6 @@ node_modules
 yarn-error.log
 dist/
 app.yaml
+yarn.lock
+package-lock.json
+.DS_Store

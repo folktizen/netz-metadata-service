@@ -22,6 +22,7 @@ export const NETWORK = {
   ROPSTEN: 'ropsten',
   GOERLI: 'goerli',
   SEPOLIA: 'sepolia',
+  BASE_SEPOLIA: 'baseSepolia',
   MAINNET: 'mainnet',
 } as const;
 
@@ -79,6 +80,9 @@ export default function getNetwork(network: NetworkName): {
       SUBGRAPH_URL =
         'https://api.studio.thegraph.com/query/49574/enssepolia/version/latest';
       break;
+    case NETWORK.BASE_SEPOLIA:
+      SUBGRAPH_URL = `https://api.studio.thegraph.com/query/55335/netizen-testnet/version/latest`;
+        break;
     case NETWORK.MAINNET:
       SUBGRAPH_URL = 
         `https://gateway-arbitrum.network.thegraph.com/api/${THE_GRAPH_API_KEY}/subgraphs/id/5XqPmWe6gjyrJtFn9cLy237i4cWw2j9HcUJEXsP5qGtH`;
@@ -92,9 +96,9 @@ export default function getNetwork(network: NetworkName): {
   // add source param at the end for better request measurability
   SUBGRAPH_URL = SUBGRAPH_URL + '?source=ens-metadata';
 
-  if (network === NETWORK.SEPOLIA) {
-    const ens = new EnsPlugin('0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e');
-    const _network = new Network(network, 11155111).attachPlugin(ens);
+  if (network === NETWORK.BASE_SEPOLIA) {
+    const ens = new EnsPlugin('0xddF6033f02e84E374B18b946f779e6c57FceA7C9',84532);
+    const _network = new Network(network, 84532).attachPlugin(ens);
     const provider = new JsonRpcProvider(WEB3_URL, _network, { staticNetwork: true });
     return { WEB3_URL, SUBGRAPH_URL, provider };
   }

@@ -1,3 +1,4 @@
+require('dotenv').config();
 import { request }        from 'graphql-request';
 import { 
   JsonRpcProvider, 
@@ -28,9 +29,9 @@ import { getNamehash }        from '../utils/namehash';
 import { bigIntToUint8Array } from '../utils/bigIntToUint8Array';
 
 const eth =
-  '0x93cdeb708b7545dc668eb9280176169d1c33cfd8ed6f04690a0bcc88a93fc4ae';
+  '0xa1292c7c8e71946fec3eb68937f1e2b9aba3b285d171870aa0d93804b496424e';
 const GRACE_PERIOD_MS = 7776000000; // 90 days as milliseconds
-
+const HOST = process.env.HOST || 'localhost'
 export async function getDomain(
   provider: JsonRpcProvider,
   networkName: NetworkName,
@@ -53,10 +54,14 @@ export async function getDomain(
 
   const newBatch = createBatchQuery('getDomainInfo');
   newBatch.add(queryDocument).add(GET_REGISTRATIONS).add(GET_WRAPPED_DOMAIN);
+  console.log(newBatch.query());
+  console.log(SUBGRAPH_URL);
 
   const domainQueryResult = await request(SUBGRAPH_URL, newBatch.query(), { tokenId: hexId });
+  console.log(domainQueryResult);
 
   const domain = version !== Version.v2 ? domainQueryResult.domains[0] : domainQueryResult.domain;
+  console.log(domain)
   if (!(domain && Object.keys(domain).length))
     throw new SubgraphRecordNotFound(`No record for ${hexId}`);
   const { name, createdAt, parent, resolver, id: namehash } = domain;
@@ -69,12 +74,12 @@ export async function getDomain(
    * from names, so even though the namehash is different,
    * domains with or without null byte look identical
    */
-  if (getNamehash(name) !== namehash) {
-    throw new NamehashMismatchError(
-      `TokenID of the query does not match with namehash of ${name}`,
-      404
-    );
-  }
+  // if (getNamehash(name) !== namehash) {
+  //   throw new NamehashMismatchError(
+  //     `TokenID of the query does not match with namehash of ${name}`,
+  //     404
+  //   );
+  // }
 
   const metadata = new Metadata({
     name,
@@ -106,10 +111,10 @@ export async function getDomain(
       metadata.generateImage();
     } else {
       metadata.setBackground(
-        `https://metadata.ens.domains/${networkName}/avatar/${name}`
+        `${HOST}${networkName}/avatar/${name}`
       );
       metadata.setImage(
-        `https://metadata.ens.domains/${networkName}/${contractAddress}/${hexId}/image`
+        `${HOST}${networkName}/${contractAddress}/${hexId}/image`
       );
     }
   }
