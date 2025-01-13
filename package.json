@@ -1,8 +1,9 @@
 {
-  "name": "netz-metadata-service",
+  "name": "@folktizen/netz-metadata-service",
   "version": "1.0.0",
   "main": "src/index.ts",
-  "author": "Makoto Inoue <2630+makoto@users.noreply.github.com>",
+  "author": "Ahmad Ainul <hey@moojok.space>",
+  "repository": "https://github.com/folktizen/netz-metadata-service",
   "license": "MIT",
   "dependencies": {
     "@adraffy/ens-normalize": "^1.10.0",
@@ -69,5 +70,6 @@
     "require": [
       "ts-node/register/transpile-only"
     ]
-  }
+  },
+  "packageManager": "yarn@4.6.0"
 }

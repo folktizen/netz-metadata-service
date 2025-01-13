@@ -1,5 +1,6 @@
 {
   "version": 2,
+  "installCommand": "./scripts/vercel-build.sh",
   "builds": [
     {
       "src": "src/index.ts",

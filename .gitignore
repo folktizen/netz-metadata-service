@@ -1,11 +1,21 @@
-.env
+**/node_modules
+**/backup
+**/.DS_Store
+**/.env*.local
+**/.env
+**/.cache
+
+# Project files
 .nyc_output
 coverage
-node_modules
-yarn-error.log
-public/
+public
 app.yaml
-yarn.lock
-package-lock.json
-.DS_Store
-.vercel
+
+# Dependencies
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
