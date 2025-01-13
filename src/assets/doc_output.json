@@ -3,19 +3,25 @@
   "info": {
     "version": "0.0.1-alpha.1",
     "title": "ENS Metadata Service",
-    "description": "Set of endpoints to query ENS metadata and more.<br/><br/><b>Important:</b> While we have taken extensive measures to sanitize the user provided content, developers are advised to exercise caution when interacting with this API endpoint. In case of any advise or question, please reach us.",
+    "description": "Set of endpoints to query ENS metadata and more",
     "contact": "contact@ens.domains",
-    "license": {
-      "name": "MIT",
-      "url": "https://opensource.org/license/mit"
-    },
-    "x-logo": {
-      "url": "/assets/logo.svg",
-      "backgroundColor": "#FFFFFF",
-      "altText": "Ethereum Name Service"
+    "license": "MIT License",
+    "x_logo": {
+      "url": "./src/assets/logo.svg",
+      "backgroundColor": "#FFFFFF"
     }
   },
   "paths": {
+    "/": {
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/{networkName}/{contractAddress(0x[a-fA-F0-9]{40})}/{tokenId}": {
       "get": {
         "description": "ENS NFT metadata",
@@ -29,11 +35,11 @@
             }
           },
           {
-            "name": "contractAddress",
+            "name": "contractAddress(0x[a-fA-F0-9]{40})",
             "in": "path",
             "required": true,
             "schema": {
-              "$ref": "#/components/schemas/contractAddress"
+              "type": "string"
             }
           },
           {
@@ -45,6 +51,143 @@
             },
             "type": "string",
             "description": "Labelhash(v1) /Namehash(v2) of your ENS name.\n\nMore: https://docs.ens.domains/contract-api-reference/name-processing#hashing-names"
+          },
+          {
+            "name": "{}",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Metadata object",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ENSMetadata"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ENSMetadata"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No results found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          },
+          "501": {
+            "description": "Unsupported network"
+          },
+          "504": {
+            "description": "Gateway Timeout"
+          }
+        }
+      }
+    },
+    "/*erc721/{tokenId}": {
+      "get": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/erc721/{tokenId}": {
+      "get": {
+        "description": "ENS NFT metadata",
+        "parameters": [
+          {
+            "name": "tokenId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/tokenId"
+            },
+            "type": "string",
+            "description": "Labelhash(v1) /Namehash(v2) of your ENS name.\n\nMore: https://docs.ens.domains/contract-api-reference/name-processing#hashing-names"
+          },
+          {
+            "name": "networkName",
+            "schema": {
+              "$ref": "#/components/schemas/networkName"
+            },
+            "in": "query"
+          },
+          {
+            "name": "{}",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Metadata object",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ENSMetadata"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ENSMetadata"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No results found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          },
+          "501": {
+            "description": "Unsupported network"
+          },
+          "504": {
+            "description": "Gateway Timeout"
+          }
+        }
+      }
+    },
+    "/erc1155/{tokenId}": {
+      "get": {
+        "description": "ENS NFT metadata",
+        "parameters": [
+          {
+            "name": "tokenId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/tokenId"
+            },
+            "type": "string",
+            "description": "Labelhash(v1) /Namehash(v2) of your ENS name.\n\nMore: https://docs.ens.domains/contract-api-reference/name-processing#hashing-names"
+          },
+          {
+            "name": "networkName",
+            "schema": {
+              "$ref": "#/components/schemas/networkName"
+            },
+            "in": "query"
+          },
+          {
+            "name": "{}",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -91,11 +234,11 @@
             }
           },
           {
-            "name": "contractAddress",
+            "name": "contractAddress(0x[a-fA-F0-9]{40})",
             "in": "path",
             "required": true,
             "schema": {
-              "$ref": "#/components/schemas/contractAddress"
+              "type": "string"
             }
           },
           {
@@ -107,6 +250,20 @@
             },
             "type": "string",
             "description": "Labelhash(v1) /Namehash(v2) of your ENS name.\n\nMore: https://docs.ens.domains/contract-api-reference/name-processing#hashing-names"
+          },
+          {
+            "name": "{}",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sec-fetch-dest",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -115,6 +272,9 @@
           },
           "404": {
             "description": "No results found"
+          },
+          "500": {
+            "description": "Internal Server Error"
           },
           "501": {
             "description": "Unsupported network"
@@ -138,11 +298,11 @@
             }
           },
           {
-            "name": "contractAddress",
+            "name": "contractAddress(0x[a-fA-F0-9]{40})",
             "in": "path",
             "required": true,
             "schema": {
-              "$ref": "#/components/schemas/contractAddress"
+              "type": "string"
             }
           },
           {
@@ -156,14 +316,18 @@
             "description": "Labelhash(v1) /Namehash(v2) of your ENS name.\n\nMore: https://docs.ens.domains/contract-api-reference/name-processing#hashing-names"
           },
           {
+            "name": "{}",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
             "name": "res",
             "in": "query",
-            "required": false,
             "schema": {
-              "$ref": "#/components/schemas/res"
-            },
-            "type": "string",
-            "description": "Resolution option for the rasterization. Available options: low (default) | high"
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -172,9 +336,6 @@
           },
           "500": {
             "description": "Internal Server Error"
-          },
-          "501": {
-            "description": "Unsupported network"
           }
         }
       }
@@ -249,6 +410,13 @@
               "$ref": "#/components/schemas/ensName"
             },
             "description": "ENS name"
+          },
+          {
+            "name": "sec-fetch-dest",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -415,10 +583,6 @@
                 "type": "string",
                 "example": "Token ID of NFT"
               },
-              "res": {
-                "type": "string",
-                "example": "Resolution query parameter for rasterization"
-              },
               "reference_url": {
                 "type": "string",
                 "example": "Marketplace URL of NFT"
@@ -538,13 +702,6 @@
         "example": "4221908525551133525058944220830153...",
         "xml": {
           "name": "tokenId"
-        }
-      },
-      "res": {
-        "type": "string",
-        "example": "high",
-        "xml": {
-          "name": "res"
         }
       },
       "networkName": {

@@ -13,7 +13,7 @@ import { preview } from './controller/preview';
 export default function (app: Express) {
   // #swagger.ignore = true
   app.get('/', (_req, res) => {
-    res.send('Well done mate To see more go to "/docs"!');
+    res.send('Well done mate, nothing to see here!');
   });
 
   app.get(

@@ -1,9 +1,9 @@
 require('dotenv').config();
 import { request }        from 'graphql-request';
-import { 
-  JsonRpcProvider, 
-  hexlify, 
-  zeroPadValue 
+import {
+  JsonRpcProvider,
+  hexlify,
+  zeroPadValue
 }                         from 'ethers';
 import {
   GET_REGISTRATIONS,
@@ -20,9 +20,9 @@ import {
   Version,
 }                         from '../base';
 import { NetworkName }    from './network';
-import { 
-  decodeFuses, 
-  getWrapperState 
+import {
+  decodeFuses,
+  getWrapperState
 }                             from '../utils/fuse';
 import { createBatchQuery }   from '../utils/batchQuery';
 import { getNamehash }        from '../utils/namehash';
@@ -82,7 +82,7 @@ export async function getDomain(
   // }
 
   const metadata = new Metadata({
-    name,
+    name: name.replace('.eth','.netz'),
     created_date: createdAt,
     tokenId: hexId,
     version,
@@ -90,7 +90,7 @@ export async function getDomain(
 
   async function requestAvatar() {
     try {
-      const [buffer, mimeType] = await getAvatarImage(provider, name);
+      const [buffer, mimeType] = await getAvatarImage(provider, name.replace('.eth','.netz'));
       if (mimeType === 'text/html') return;
       const base64 = buffer.toString('base64');
       return [base64, mimeType];
@@ -111,7 +111,7 @@ export async function getDomain(
       metadata.generateImage();
     } else {
       metadata.setBackground(
-        `${HOST}${networkName}/avatar/${name}`
+        `${HOST}${networkName}/avatar/${name.replace('.eth','.netz')}`
       );
       metadata.setImage(
         `${HOST}${networkName}/${contractAddress}/${hexId}/image`
@@ -126,7 +126,7 @@ export async function getDomain(
       const expiration_date = registration.expiryDate * 1000;
       if (expiration_date + GRACE_PERIOD_MS < +new Date()) {
         throw new ExpiredNameError(
-          `'${name}' is already been expired at ${new Date(
+          `'${name.replace('.eth','.netz')}' is already been expired at ${new Date(
             expiration_date
           ).toUTCString()}.`,
           410
