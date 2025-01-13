@@ -27,7 +27,17 @@ export default function (app: Express) {
   );
 
   app.get(
+    '/erc721/:tokenId',
+    ensMetadata721
+  );
+
+  app.get(
     '//erc1155/:tokenId',
+    ensMetadata1155
+  );
+
+  app.get(
+    '/erc1155/:tokenId',
     ensMetadata1155
   );
 
